@@ -1,7 +1,6 @@
 use crate::components::layout::Layout;
 use leptos::*;
 
-/// A parameterized incrementing button
 #[component]
 pub fn Rooms() -> impl IntoView {
     let rows = 10;

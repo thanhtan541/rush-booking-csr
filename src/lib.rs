@@ -8,6 +8,7 @@ mod pages;
 
 // Top-Level pages
 use crate::pages::admin::rooms::Rooms;
+use crate::pages::admin::users::*;
 use crate::pages::home::Home;
 use crate::pages::login::Login;
 use crate::pages::not_found::NotFound;
@@ -31,10 +32,21 @@ pub fn App() -> impl IntoView {
         <Router>
             <Routes>
                 <Route path="/" view=Home/>
+                <UsersRoutes/>
                 <Route path="/*" view=NotFound/>
                 <Route path="/login" view=Login/>
                 <Route path="/admin/room" view=Rooms/>
             </Routes>
         </Router>
+    }
+}
+
+#[component(transparent)]
+fn UsersRoutes() -> impl IntoView {
+    view! {
+        <Route path="admin/users" view=Users>
+            <Route path=":id" view=UserProfile/>
+            <Route path="" view=NoUser/>
+        </Route>
     }
 }
