@@ -22,18 +22,13 @@ pub fn Users() -> impl IntoView {
 pub fn UserProfile() -> impl IntoView {
     let id = 1;
     view! {
-        <Layout>
-            <p>User id: {id}</p>
-            <Outlet/>
-        </Layout>
+        <p>User id: {id}</p>
     }
 }
 
 #[component]
 pub fn NoUser() -> impl IntoView {
     view! {
-        <Layout>
-            <p>Please select an user</p>
-        </Layout>
+        <p>Please select an user</p>
     }
 }
