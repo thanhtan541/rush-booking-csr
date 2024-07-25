@@ -11,13 +11,22 @@ use crate::pages::admin::rooms::*;
 use crate::pages::admin::users::*;
 use crate::pages::home::Home;
 use crate::pages::login::Login;
+use crate::pages::logout::Logout;
 use crate::pages::not_found::NotFound;
+
+#[derive(Clone, Debug, Default)]
+struct GlobalState {
+    is_logged: bool,
+}
 
 /// An app router which renders the homepage and handles 404's
 #[component]
 pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
+    // Global state
+    let state = create_rw_signal(GlobalState::default());
+    provide_context(state);
 
     view! {
         <Html lang="en" dir="ltr" attr:data-theme="light"/>
@@ -37,6 +46,7 @@ pub fn App() -> impl IntoView {
                 <RoomsRoutes/>
                 <Route path="/*" view=NotFound/>
                 <Route path="/login" view=Login/>
+                <Route path="/logout" view=Logout/>
             </Routes>
         </Router>
     }

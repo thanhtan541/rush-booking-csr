@@ -1,4 +1,4 @@
-use crate::components::layout::Layout;
+use crate::components::layout_with_auth::LayoutWithAuth;
 use leptos::*;
 use leptos_router::*;
 
@@ -6,7 +6,7 @@ use leptos_router::*;
 pub fn Users() -> impl IntoView {
     let rows = 10;
     view! {
-        <Layout>
+        <LayoutWithAuth>
             <p>User lists</p>
             <ul>
             {(1..rows)
@@ -14,7 +14,7 @@ pub fn Users() -> impl IntoView {
                 .collect_view()}
             </ul>
             <Outlet/>
-        </Layout>
+        </LayoutWithAuth>
     }
 }
 

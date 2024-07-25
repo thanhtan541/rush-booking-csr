@@ -1,7 +1,14 @@
 use leptos::*;
+use leptos_router::*;
+
+use crate::GlobalState;
 
 #[component]
-pub fn Layout(children: Children) -> impl IntoView {
+pub fn LayoutWithAuth(children: Children) -> impl IntoView {
+    let state = expect_context::<RwSignal<GlobalState>>();
+
+    let is_logger = create_read_slice(state, |state| state.is_logged);
+
     view! {
         <ErrorBoundary fallback=|errors| {
             view! {
@@ -21,6 +28,11 @@ pub fn Layout(children: Children) -> impl IntoView {
                 </ul>
             }
         }>
+        <Suspense>
+            <Show when=move || !is_logger()>
+                <Redirect path="/login" />
+            </Show>
+        </Suspense>
         <div class="flex">
             <div class="h-[100vh] w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
                 <p>Sidebar</p>
