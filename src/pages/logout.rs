@@ -1,12 +1,12 @@
-use crate::{components::layout::Layout, GlobalState};
+use crate::{components::layout_with_auth::LayoutWithAuth, GlobalState};
 use leptos::*;
 
 #[component]
 pub fn Logout() -> impl IntoView {
     view! {
-        <Layout>
+        <LayoutWithAuth>
             <SubmitForm/>
-        </Layout>
+        </LayoutWithAuth>
     }
 }
 
@@ -14,13 +14,15 @@ pub fn Logout() -> impl IntoView {
 fn SubmitForm() -> impl IntoView {
     let state = expect_context::<RwSignal<GlobalState>>();
     let set_is_logged = create_write_slice(state, |state, n| state.is_logged = n);
-    let on_submit = move |ev: leptos::ev::SubmitEvent| {
-        ev.prevent_default();
-        set_is_logged(false);
-    };
+    let navigate = leptos_router::use_navigate();
     view! {
-        <form on:submit=on_submit> // on_submit defined below
-            <input type="submit" value="Submit"/>
-        </form>
+        <button class="bg-sky-500 hover:bg-sky-700"
+                on:click=move |_| {
+                    set_is_logged(false);
+                    navigate("/login", Default::default());
+                }
+        >
+         "Logout"
+        </button>
     }
 }

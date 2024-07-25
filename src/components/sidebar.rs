@@ -8,7 +8,7 @@ pub fn Sidebar() -> impl IntoView {
          <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
                <li>
-                   <MenuItem title="Dashboard".into() href="#".into() render_icon=DashboardIcon />
+                   <MenuItem title="Dashboard".into() href="http://localhost:8080/admin/dashboard".into() render_icon=DashboardIcon />
                </li>
                <li>
                    <MenuItem title="Users".into() href="http://localhost:8080/admin/users".into() render_icon=UserIcon />
@@ -17,10 +17,10 @@ pub fn Sidebar() -> impl IntoView {
                    <MenuItem title="Inventories".into() href="http://localhost:8080/admin/rooms".into() render_icon=InventoryIcon />
                 </li>
                 <li>
-                   <MenuItem title="Sign In".into() href="#".into() render_icon=SigninIcon />
+                   <MenuItem title="Log In".into() href="http://localhost:8080/login".into() render_icon=LoginIcon />
                 </li>
                 <li>
-                   <MenuItem title="Sign Up".into() href="#".into() render_icon=SignupIcon />
+                   <MenuItem title="Log Out".into() href="http://localhost:8080/logout".into() render_icon=LogoutIcon />
                 </li>
             </ul>
           </div>
@@ -93,12 +93,23 @@ fn SignupIcon() -> impl IntoView {
     }
 }
 
-/// Signin icon
+/// Login icon
 #[component]
-fn SigninIcon() -> impl IntoView {
+fn LoginIcon() -> impl IntoView {
     view! {
       <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
       </svg>
+    }
+}
+
+/// Logout icon
+#[component]
+fn LogoutIcon() -> impl IntoView {
+    view! {
+        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+        </svg>
+
     }
 }

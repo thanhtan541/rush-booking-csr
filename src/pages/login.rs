@@ -1,14 +1,13 @@
-use crate::{components::layout::Layout, GlobalState};
+use crate::{components::layout_with_auth::LayoutWithAuth, GlobalState};
 use leptos::*;
 
 /// Default Home Page
 #[component]
 pub fn Login() -> impl IntoView {
     view! {
-        <Layout>
+        <LayoutWithAuth>
             <SubmitForm/>
-        </Layout>
-
+        </LayoutWithAuth>
     }
 }
 
