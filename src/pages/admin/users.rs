@@ -7,13 +7,19 @@ pub fn Users() -> impl IntoView {
     let rows = 10;
     view! {
         <LayoutWithAuth>
-            <p>User lists</p>
-            <ul>
-            {(1..rows)
-                .map(|n| view! { <li>User number: {n}</li>})
-                .collect_view()}
-            </ul>
-            <Outlet/>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                 <div class="flex items-center justify-center h-60 rounded bg-gray-50 dark:bg-gray-800">
+                    <p>User lists</p>
+                    <ul>
+                    {(1..rows)
+                        .map(|n| view! { <li>User number: {n}</li>})
+                        .collect_view()}
+                    </ul>
+                 </div>
+                 <div class="flex items-center justify-center h-60 rounded bg-gray-50 dark:bg-gray-800">
+                    <Outlet/>
+                 </div>
+            </div>
         </LayoutWithAuth>
     }
 }

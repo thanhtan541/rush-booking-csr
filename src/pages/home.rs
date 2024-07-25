@@ -4,7 +4,7 @@ use leptos::*;
 #[component]
 pub fn Home() -> impl IntoView {
     view! {
-        <ErrorBoundary fallback=|errors| {
+      <ErrorBoundary fallback=|errors| {
             view! {
                 <h1>"Uh oh! Something went wrong!"</h1>
 
@@ -22,7 +22,8 @@ pub fn Home() -> impl IntoView {
                 </ul>
             }
         }>
-        <p>Landing page</p>
-        </ErrorBoundary>
+
+      <p>Home</p>
+      </ErrorBoundary>
     }
 }
