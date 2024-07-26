@@ -9,7 +9,7 @@ struct ResponseData<T> {
     pub code: u16,
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Clone)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug)]
 struct Room {
     id: String,
     name: String,
@@ -25,8 +25,8 @@ pub fn Rooms() -> impl IntoView {
         |_| async move {
             let api_apdater = API_ADAPTER_INSTANCE.get().unwrap();
             let resp: ResponseData<Room> = api_apdater.get_rooms().await.json().await.unwrap();
-
-            resp
+            
+            resp.data
         },
     );
 
@@ -34,11 +34,17 @@ pub fn Rooms() -> impl IntoView {
         <LayoutWithAuth>
             <div class="grid grid-cols-2 gap-4 mb-4">
                  <div class="flex items-center justify-center h-60 rounded bg-gray-50 dark:bg-gray-800">
-                    <p>Room lists</p>
+                    Room lists
                     <ul>
-                    {move || rooms.get().unwrap().data.into_iter()
-                        .map(|n| view! { <li>Room number: {n.id}</li>})
-                        .collect_view()}
+                    {move || match rooms.get() {
+                        None => view! { <p>"Loading..."</p> }.into_view(),
+                        Some(data) => {
+                            data.into_iter()
+                                .map(|n| view! { <li>Room number: {n.id}</li>})
+                                .collect_view()
+                            }
+                        }
+                    }
                     </ul>
                  </div>
                  <div class="flex items-center justify-center h-60 rounded bg-gray-50 dark:bg-gray-800">
