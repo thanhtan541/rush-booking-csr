@@ -3,9 +3,12 @@ use leptos_meta::*;
 use leptos_router::*;
 
 // Modules
+mod api;
 mod components;
 mod pages;
 
+use crate::api::ApiAdapter;
+use crate::api::API_ADAPTER_INSTANCE;
 // Top-Level pages
 use crate::pages::admin::dashboard::Dashboard;
 use crate::pages::admin::rooms::*;
@@ -27,6 +30,13 @@ pub fn App() -> impl IntoView {
     // Global state
     let state = create_rw_signal(GlobalState::default());
     provide_context(state);
+    // Global instance, such as logger, api client
+    let api_client = reqwest::Client::builder().build().unwrap();
+    let api_adapter = ApiAdapter {
+        address: "http://localhost:8000".into(), // Backend address
+        client: api_client,
+    };
+    API_ADAPTER_INSTANCE.set(api_adapter).unwrap();
 
     view! {
         <Html lang="en" dir="ltr" attr:data-theme="light"/>
