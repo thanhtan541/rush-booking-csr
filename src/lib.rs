@@ -1,6 +1,6 @@
 use leptos::*;
 use leptos_meta::*;
-use leptos_router::*;
+use leptos_router::{Router, *};
 
 // Modules
 mod api;
@@ -10,6 +10,7 @@ mod pages;
 use crate::api::ApiAdapter;
 use crate::api::API_ADAPTER_INSTANCE;
 // Top-Level pages
+use crate::components::{navbar::Navbar, sidebar::Sidebar};
 use crate::pages::admin::dashboard::Dashboard;
 use crate::pages::admin::rooms::*;
 use crate::pages::admin::users::*;
@@ -50,15 +51,19 @@ pub fn App() -> impl IntoView {
         <Stylesheet id="leptos" href="/style/output.css"/>
 
         <Router>
-            <Routes>
-                <Route path="/" view=Dashboard/>
-                <Route path="/admin/dashboard" view=Dashboard/>
-                <UsersRoutes/>
-                <RoomsRoutes/>
-                <Route path="/*" view=NotFound/>
-                <Route path="/login" view=Login/>
-                <Route path="/logout" view=Logout/>
-            </Routes>
+            <Navbar/>
+            <Sidebar/>
+            <main>
+                <Routes>
+                    <Route path="/" view=Dashboard/>
+                    <Route path="/admin/dashboard" view=Dashboard/>
+                    <UsersRoutes/>
+                    <RoomsRoutes/>
+                    <Route path="/*" view=NotFound/>
+                    <Route path="/login" view=Login/>
+                    <Route path="/logout" view=Logout/>
+                </Routes>
+            </main>
         </Router>
     }
 }

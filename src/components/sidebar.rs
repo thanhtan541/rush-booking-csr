@@ -3,24 +3,29 @@ use leptos_router::*;
 
 #[component]
 pub fn Sidebar() -> impl IntoView {
+    let router = use_context::<RouterContext>()
+        .expect("<Routes/> component should be nested within a <Router/>.");
+    let current_path = router.pathname().get();
+    // Todo: set active menu item
+
     view! {
        <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
          <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
                <li>
-                   <MenuItem title="Dashboard".into() href="http://localhost:8080/admin/dashboard".into() render_icon=DashboardIcon />
+                   <MenuItem title="Dashboard".into() href="/admin/dashboard".into() render_icon=DashboardIcon is_active={current_path == "/admin/dashboard"} />
                </li>
                <li>
-                   <MenuItem title="Users".into() href="http://localhost:8080/admin/users".into() render_icon=UserIcon />
+                   <MenuItem title="Users".into() href="/admin/users".into() render_icon=UserIcon is_active={current_path == "/admin/users"} />
                 </li>
                 <li>
-                   <MenuItem title="Inventories".into() href="http://localhost:8080/admin/rooms".into() render_icon=InventoryIcon />
+                   <MenuItem title="Inventories".into() href="/admin/rooms".into() render_icon=InventoryIcon is_active={current_path == "/admin/rooms"} />
                 </li>
                 <li>
-                   <MenuItem title="Log In".into() href="http://localhost:8080/login".into() render_icon=LoginIcon />
+                   <MenuItem title="Log In".into() href="/login".into() render_icon=LoginIcon is_active={current_path == "/login"} />
                 </li>
                 <li>
-                   <MenuItem title="Log Out".into() href="http://localhost:8080/logout".into() render_icon=LogoutIcon />
+                   <MenuItem title="Log Out".into() href="/logout".into() render_icon=LogoutIcon is_active={current_path == "/logout"} />
                 </li>
             </ul>
           </div>
@@ -37,13 +42,22 @@ fn MenuItem<F, IV>(
     href: String,
     /// Children as svg icon
     render_icon: F,
+    /// Indicate active state
+    #[prop(optional)]
+    is_active: bool,
 ) -> impl IntoView
 where
     F: Fn() -> IV + 'static,
     IV: IntoView,
 {
+    let class = if is_active {
+        "flex items-center p-2 text-gray-900 rounded-lg dark:text-white bg-gray-100 dark:hover:bg-gray-700 group"
+    } else {
+        "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+    };
+
     view! {
-       <A href={href} class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+       <A href={href} class={class}>
             {render_icon()}
             <span class="flex-1 ms-3 whitespace-nowrap">{title}</span>
        </A>

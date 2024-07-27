@@ -25,7 +25,7 @@ pub fn Rooms() -> impl IntoView {
         |_| async move {
             let api_apdater = API_ADAPTER_INSTANCE.get().unwrap();
             let resp: ResponseData<Room> = api_apdater.get_rooms().await.json().await.unwrap();
-            
+
             resp.data
         },
     );
