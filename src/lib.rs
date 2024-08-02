@@ -5,6 +5,7 @@ use leptos_router::{Router, *};
 // Modules
 mod api;
 mod components;
+mod domain;
 mod pages;
 
 use crate::api::ApiAdapter;
@@ -22,6 +23,9 @@ use crate::pages::not_found::NotFound;
 struct GlobalState {
     is_logged: bool,
 }
+
+// Todo: Please make sure it wasn't preloaded for nothing warning
+// Todo: handling network error
 
 /// An app router which renders the homepage and handles 404's
 #[component]

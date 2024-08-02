@@ -1,4 +1,5 @@
 use crate::api::API_ADAPTER_INSTANCE;
+use crate::domain::JwtResponse;
 use crate::{components::layout_with_auth::LayoutWithAuth, GlobalState};
 use leptos::html::Input;
 use leptos::{ev::SubmitEvent, *};
@@ -11,15 +12,6 @@ pub fn Login() -> impl IntoView {
             <SubmitForm/>
         </LayoutWithAuth>
     }
-}
-
-#[derive(serde::Serialize, serde::Deserialize, Clone, Debug)]
-struct JWT {
-    token_type: String,
-    access_token: String,
-    refresh_token: String,
-    id_token: String,
-    expires_in: u16,
 }
 
 struct Credential {
@@ -46,7 +38,7 @@ fn SubmitForm() -> impl IntoView {
         });
         async move {
             let api_apdater = API_ADAPTER_INSTANCE.get().unwrap();
-            let jwt: JWT = api_apdater.post_login(&body).await.json().await.unwrap();
+            let jwt: JwtResponse = api_apdater.post_login(&body).await.json().await.unwrap();
             jwt
         }
     });
@@ -64,6 +56,7 @@ fn SubmitForm() -> impl IntoView {
         login_action.dispatch(credential);
     };
 
+    // Read signal of value return from dispatch action
     let submitted = login_action.value();
     create_effect(move |_| {
         // immediately store token and redirect
@@ -72,7 +65,8 @@ fn SubmitForm() -> impl IntoView {
                 log::debug!("Value: {:?}", data);
                 set_is_logged(true);
                 navigate("/admin/users", Default::default());
-            },
+            }
+            // Todo: Flash message for warning
             None => log::debug!("Value: {:?}", submitted()),
         }
     });
