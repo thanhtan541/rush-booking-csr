@@ -1,13 +1,9 @@
-use crate::{api::API_ADAPTER_INSTANCE, components::layout_with_auth::LayoutWithAuth};
+use crate::{
+    api::{ResponseData, API_ADAPTER_INSTANCE},
+    components::layout_with_auth::LayoutWithAuth,
+};
 use leptos::*;
 use leptos_router::*;
-
-#[derive(serde::Serialize, serde::Deserialize, Clone)]
-struct ResponseData<T> {
-    pub data: Vec<T>,
-    pub message: String,
-    pub code: u16,
-}
 
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug)]
 struct Room {

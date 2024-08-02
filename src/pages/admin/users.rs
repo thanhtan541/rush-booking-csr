@@ -44,7 +44,7 @@ fn ListItem(
        <A href={href} class={class} on:click=move |_| on_click.update(|value| *value = id) >
         <div>
             <p class="text-xl">{id}</p>
-            <p>{title} bed room</p>
+            <p>{title} John Doe</p>
         </div>
        </A>
     }
