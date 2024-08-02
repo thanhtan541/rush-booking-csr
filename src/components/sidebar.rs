@@ -3,9 +3,7 @@ use leptos_router::*;
 
 #[component]
 pub fn Sidebar() -> impl IntoView {
-    let router = use_context::<RouterContext>()
-        .expect("<Routes/> component should be nested within a <Router/>.");
-    let current_path = router.pathname().get();
+    let current_path = "/admin/dashboard".to_string();
     // Todo: set active menu item
 
     view! {

@@ -1,6 +1,6 @@
 use leptos::*;
 use leptos_meta::*;
-use leptos_router::{Router, *};
+use leptos_router::{Router, Routes, Route, *};
 
 // Modules
 mod api;
