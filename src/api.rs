@@ -1,5 +1,5 @@
 use once_cell::sync::OnceCell;
-use reqwest::header::{CONTENT_TYPE, ACCEPT};
+use reqwest::header::{ACCEPT, CONTENT_TYPE};
 
 #[derive(serde::Serialize, serde::Deserialize, Clone)]
 pub struct ResponseData<T> {

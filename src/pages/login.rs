@@ -47,6 +47,7 @@ fn SubmitForm() -> impl IntoView {
         async move {
             let api_apdater = API_ADAPTER_INSTANCE.get().unwrap();
             let jwt: JWT = api_apdater.post_login(&body).await.json().await.unwrap();
+            jwt
         }
     });
     let on_submit = move |ev: SubmitEvent| {
@@ -64,9 +65,20 @@ fn SubmitForm() -> impl IntoView {
     };
 
     let submitted = login_action.value();
+    create_effect(move |_| {
+        // immediately store token and redirect
+        match submitted() {
+            Some(data) => {
+                log::debug!("Value: {:?}", data);
+                set_is_logged(true);
+                navigate("/admin/users", Default::default());
+            },
+            None => log::debug!("Value: {:?}", submitted()),
+        }
+    });
+
     view! {
         <form
-            enctype="multipart/form-data"
             class="max-w-sm mx-auto"
             on:submit=on_submit>
             <div class="mb-5">
@@ -89,9 +101,5 @@ fn SubmitForm() -> impl IntoView {
                 value="Login"
             />
         </form>
-        <p>
-            "Submitted: "
-            <code>{move || format!("{:#?}", submitted())}</code>
-        </p>
     }
 }

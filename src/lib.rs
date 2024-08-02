@@ -34,7 +34,8 @@ pub fn App() -> impl IntoView {
     // Global instance, such as logger, api client
     let api_client = reqwest::Client::builder().build().unwrap();
     let api_adapter = ApiAdapter {
-        address: "http://localhost:8000".into(), // Backend address
+        // Todo: Avoid using localhost, because it will cause CORs issue.
+        address: "http://127.0.0.1:8000".into(), // Backend address
         client: api_client,
     };
     API_ADAPTER_INSTANCE.set(api_adapter).unwrap();
